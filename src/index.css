@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-::-webkit-scrollbar {
+::-webkit-scrollbar{
     border-radius: 10px;
     overflow: hidden;
     width: 5px;
@@ -11,7 +11,7 @@
     background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb{
     border-radius: 10px;
     background: #1e293b;
 }
@@ -21,10 +21,6 @@ video {
     z-index: 0;
 }
 
-.c-z-1 {
+.c-z-1{
     z-index: 1;
-}
-
-.c-z-0 {
-    z-index: 0;
 }

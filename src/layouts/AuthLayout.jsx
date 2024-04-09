@@ -1,59 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Splash from "../components/Splash";
 import NotificationBar from "../components/NotificationBar";
 import SearchBar from "../components/SearchBar";
-import { MediaAccountsPath } from "../MyMethods/MyMethods";
-import NotFound from "../pages/NotFound";
-import IFCondition from "../components/IFCondition";
 
-function AuthLayout({ children, accessOnly }) {
+function AuthLayout({ children }) {
   const { loading, user, token, handleLogout, isAuthenticated } = useAuth();
   const [openMenu, setOpenMenu] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && user != null && user.deleted) {
-      handleLogout({ defaultNavigate: false });
-      navigate("/login", {
-        replace: true,
-        state: {
-          message: "Your account has been deleted or temporarily suspended",
-        },
-      });
-      return;
-    }
-  }, [loading, user, token]);
 
   if (loading === true) {
     return <Splash />;
   }
 
-  if (!loading && user === null && token === null && !isAuthenticated) {
+  if (
+    !loading &&
+    user === null &&
+    token === null &&
+    isAuthenticated === false
+  ) {
     return <Navigate to="/login" />;
-  }
-
-  if (!loading && user != null && user.deleted) {
-    handleLogout({ defaultNavigate: false });
-    navigate("/login", {
-      replace: true,
-      state: {
-        message: "Your account has been deleted or temporarily suspended",
-      },
-    });
-    return;
-  }
-
-  if (accessOnly != null && accessOnly != user.email) {
-    return <NotFound />;
   }
 
   return (
     <div>
       <div className="w-full h-16  flex items-center justify-between p-4 shadow-lg fixed top-0 left-0 right-0 bg-slate-900 border-b border-b-slate-800 z-10">
         <Link to="/">
-          <div className="font-bold text-white text-2xl">Blog</div>
+          <div className="flex items-center">
+            <img src="./public/logo-1.png" alt="" className="w-12 h-12"/>
+            <div className="font-bold text-white text-2xl ml-3">Blog</div>
+          </div>
         </Link>
         {/* // search bar and result */}
         <SearchBar />
@@ -65,11 +41,11 @@ function AuthLayout({ children, accessOnly }) {
               onClick={() => setOpenMenu(!openMenu)}
               className="text-white"
             >
-              <div className="w-11 h-11 rounded-full overflow-hidden border flex items-center justify-center">
+              <div className="w-11 h-11 rounded-full overflow-hidden border">
                 <img
                   loading="lazy"
-                  src={user.img_url ? MediaAccountsPath + user.img_url : ""}
-                  className="w-full h-full object-cover"
+                  src="http://picsum.photos/200"
+                  width="100%"
                   alt=""
                 />
               </div>
@@ -82,15 +58,6 @@ function AuthLayout({ children, accessOnly }) {
                       Profile
                     </li>
                   </Link>
-                  <IFCondition
-                    condition={user.premissions[0].includes("admin")}
-                  >
-                    <Link to={`/admin`} onClick={() => setOpenMenu(!openMenu)}>
-                      <li className="text-white px-6 rounded-lg cursor-pointer py-2 hover:bg-slate-700">
-                        Admin
-                      </li>
-                    </Link>
-                  </IFCondition>
                   <Link to="/settings" onClick={() => setOpenMenu(!openMenu)}>
                     <li className="text-white px-6 rounded-lg cursor-pointer py-2 hover:bg-slate-700">
                       Settings

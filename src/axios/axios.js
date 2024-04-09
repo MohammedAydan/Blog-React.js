@@ -1,9 +1,8 @@
 // axios.js
 import axios from "axios";
-import { baseUrl } from "../MyMethods/MyMethods";
 
 const axiosClient = axios.create({
-    baseURL: `http://${baseUrl}/api/v1`,
+    baseURL: "http://127.0.0.1:8000/api/v1",
 });
 
 axiosClient.interceptors.request.use(
