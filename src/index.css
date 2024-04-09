@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+::-webkit-scrollbar {
+    border-radius: 10px;
+    overflow: hidden;
+    width: 5px;
+    height: 5px;
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #1e293b;
+}
+
+audio,
+video {
+    z-index: 0;
+}
+
+.c-z-1 {
+    z-index: 1;
+}
+
+.c-z-0 {
+    z-index: 0;
+}
